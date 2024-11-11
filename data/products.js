@@ -656,5 +656,59 @@ const products = [
       "apparel",
       "mens"
     ]
+  },
+  {
+    id: "bc2847e9-5323-403f-b7cf-57fde044a1231231",
+    image: "images/products/athletic-cotton-socks-6-pairs.jpg",
+    name: "Athletic Cotton Socks 6 Pairs",
+    rating: {
+      stars: 2.5,
+      count: 3
+    },
+    priceCents: 898,
+    keywords: [
+      "socks",
+      "athletic"
+    ]
+  },
+  {
+    id: "bc2847e9-5323-403f-b7cf-57fde044a1231445",
+    image: "images/products/backpack.jpg",
+    name: "Backpack For Webdev Amateur To Carry Your Team (IT'S WORKED!!!)",
+    rating: {
+      stars: 5,
+      count: 2
+    },
+    priceCents: 2098,
+    keywords: [
+      "backpack",
+      "web",
+      "developer",
+      "code",
+      "coder",
+      "amateur",
+      "beginner"
+    ]
+  },
+  {
+    id: "bc2847e9-5323-403f-b7cf-57fde044a1231445",
+    image: "images/products/umbrella.jpg",
+    name: "Umbrella To Block Sadness (IT'S WORKED!!!)",
+    rating: {
+      stars: 5,
+      count: 4
+    },
+    priceCents: 1098,
+    keywords: [
+      "umbrella",
+      "web",
+      "developer",
+      "code",
+      "coder",
+      "amateur",
+      "beginner",
+      "sad",
+      "sadness"
+    ]
   }
 ];
