@@ -59,4 +59,12 @@ export function removeProductFromCart(productId) {
   });
 
   saveToStorage();
-}
+};
+
+export function updateDeliveryOption(productId, deliveryOptionId) {
+  let matchingItem = cart.find(product => product.productId === productId);
+
+  matchingItem.deliveryOptionId = deliveryOptionId;
+
+  saveToStorage();
+};
