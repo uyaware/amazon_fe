@@ -72,7 +72,7 @@ function updateCartTotalQuantity() {
     .innerHTML = totalQuantity;
 }
 
-function messageWhenAddToCart(productId) {
+function messageWhenAddToCart(message) {
   message.classList.add('added-to-cart-clicked');
 
   if (timeoutIds[productId]) {
@@ -97,7 +97,7 @@ document.querySelectorAll('.js-add-to-cart-button')
 
       updateCartTotalQuantity();
       
-      messageWhenAddToCart(productId);
+      messageWhenAddToCart(message);
       
       console.log(cart);
     });
