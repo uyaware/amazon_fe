@@ -3,7 +3,8 @@ import { products } from '../../data/products.js';
 import { formatCurrency } from '../utils/money.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { deliveryOptions } from '../../data/deliveryOptions.js';
-
+import { renderPaymentSummary } from './paymentSummary.js';
+import { renderCheckoutHeader } from './checkoutHeader.js';
 
 
 export function renderOrderSummary() {
@@ -107,7 +108,7 @@ export function renderOrderSummary() {
     return html;
   }
   
-  document.querySelector('.js-cart-total-quantity').innerHTML = `${cartTotalQuantity()} items`;
+  renderCheckoutHeader();
   
   document.querySelector('.js-order-summary').innerHTML = cartSummary;
   
@@ -116,10 +117,9 @@ export function renderOrderSummary() {
       const productId = link.dataset.productId;
   
       removeProductFromCart(productId);
-  
-      document.querySelector(`.js-cart-item-container-${productId}`).remove();
-  
-      document.querySelector('.js-cart-total-quantity').innerHTML = `${cartTotalQuantity()} items`;
+
+      renderPaymentSummary();
+      renderOrderSummary();
     });
   });
   
@@ -141,48 +141,58 @@ export function renderOrderSummary() {
       saveButton.classList.toggle('invisible');
       quantityInput.classList.toggle('invisible');
   
-      saveButton.addEventListener('click', () => {
-        let quantity = Number(quantityInput.value);
-        console.log(quantity);
-        if (isNaN(quantity)) {
-          alert('Please enter a number');
-        }
-        else {
-          let addQuantity = quantity - Number(quantityLabel.innerHTML);
-          addProductToCart(productId, addQuantity);
-          document.querySelector('.js-cart-total-quantity').innerHTML = `${cartTotalQuantity()} items`;
-          quantityLabel.innerHTML = quantity;
-        }
+      if (!saveButton.classList.contains('event-bound')) {
+        saveButton.classList.add('event-bound'); // Đánh dấu đã gán sự kiện
   
-        quantityLabel.classList.toggle('invisible');
-        updateButton.classList.toggle('invisible');
-        deleteButton.classList.toggle('invisible');
-        saveButton.classList.toggle('invisible');
-        quantityInput.classList.toggle('invisible');
-      });
-  
-      quantityInput.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
+        saveButton.addEventListener('click', () => {
           let quantity = Number(quantityInput.value);
-          
-        if (isNaN(quantity)) {
-          alert('Please enter a number');
-        }
-        else {
-          let addQuantity = quantity - Number(quantityLabel.innerHTML);
-          addProductToCart(productId, addQuantity);
-          document.querySelector('.js-cart-total-quantity').innerHTML = `${cartTotalQuantity()} items`;
-          quantityLabel.innerHTML = quantity;
-        }
+          if (isNaN(quantity) || quantity <= 0 || quantity >= 100) {
+            alert('Please enter a number less than 100 and bigger than 0');
+          } else {
+            let addQuantity = quantity - Number(quantityLabel.innerHTML);
+            addProductToCart(productId, addQuantity);
+            quantityLabel.innerHTML = quantity;
+            
+            renderCheckoutHeader();
+            renderPaymentSummary();
+          }
   
-        quantityLabel.classList.toggle('invisible');
-        updateButton.classList.toggle('invisible');
-        deleteButton.classList.toggle('invisible');
-        saveButton.classList.toggle('invisible');
-        quantityInput.classList.toggle('invisible');
+          // Toggle lại để ẩn input và nút save sau khi lưu
+          quantityLabel.classList.toggle('invisible');
+          updateButton.classList.toggle('invisible');
+          deleteButton.classList.toggle('invisible');
+          saveButton.classList.toggle('invisible');
+          quantityInput.classList.toggle('invisible');
+        });
+      }
+
+      if (!saveButton.classList.contains('keydown-bound')) {
+        saveButton.classList.add('keydown-bound'); // Đánh dấu đã gán sự kiện
+
+          quantityInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+              let quantity = Number(quantityInput.value);
+
+              if (isNaN(quantity) || (quantity <= 0) || (quantity >= 100)) {
+                alert('Please enter a number less them 100 and bigger than 0');
+              }
+              else {
+                let addQuantity = quantity - Number(quantityLabel.innerHTML);
+                addProductToCart(productId, addQuantity);
+                quantityLabel.innerHTML = quantity;
+
+                renderCheckoutHeader();
+              }
+        
+              quantityLabel.classList.toggle('invisible');
+              updateButton.classList.toggle('invisible');
+              deleteButton.classList.toggle('invisible');
+              saveButton.classList.toggle('invisible');
+              quantityInput.classList.toggle('invisible');
+            }
+          });
         }
       });
-    });
   });
   
   document.querySelectorAll('.js-delivery-option').forEach((option) => {
@@ -192,6 +202,7 @@ export function renderOrderSummary() {
   
       updateDeliveryOption(productId, deliveryOptionId);
       renderOrderSummary();
+      renderPaymentSummary();
     });
   });
 };

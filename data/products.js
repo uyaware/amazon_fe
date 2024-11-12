@@ -674,7 +674,7 @@ export const products = [
   {
     id: "bc2847e9-5323-403f-b7cf-57fde044a1231445",
     image: "images/products/backpack.jpg",
-    name: "Backpack For Webdev Amateur To Carry Your Team (IT'S WORKED!!!)",
+    name: "Backpack For Webdev Amateur To Carry Your Team (IT WORKED!!!)",
     rating: {
       stars: 5,
       count: 2

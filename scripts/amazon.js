@@ -82,9 +82,7 @@ document.querySelectorAll('.js-add-to-cart-button')
   .forEach((button) => {
     button.addEventListener('click', () => {
       const { productId } = button.dataset;
-
       const quantity = Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
-
       const message = document.querySelector(`.js-added-to-cart-${productId}`);
 
       addProductToCart(productId, quantity);
@@ -93,7 +91,5 @@ document.querySelectorAll('.js-add-to-cart-button')
         .innerHTML = cartTotalQuantity();
       
       messageWhenAddToCart(message, productId);
-      
-      console.log(cart);
     });
   });
