@@ -14,13 +14,12 @@ export function renderOrderSummary() {
     const productId = cartItem.productId;
     let matchingProduct;
   
-    for (let product of products) {
+    products.forEach((product) => {
       if (productId === product.id) {
         matchingProduct = product;
-        break;
       }
-    }
-  
+    });
+
     const deliveryOptionId = cartItem.deliveryOptionId;
   
     let matchingDeliveryOption = deliveryOptions.find(option => deliveryOptionId === option.id);

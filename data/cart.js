@@ -5,12 +5,12 @@ export let cart = JSON.parse(localStorage.getItem('cart'));
 if (!cart) {
   cart = [
     {
-      productId: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
+      productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
       quantity: 2,
       deliveryOptionId: '1'
     },
     {
-      productId: "bc2847e9-5323-403f-b7cf-57fde044a1231445",
+      productId: '3ebe75dc-64d2-4137-8860-1f5a963e534b',
       quantity: 1,
       deliveryOptionId: '2'
     }
@@ -70,3 +70,16 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
 
   saveToStorage();
 };
+
+export function loadCart(func) {
+  const xhr = new XMLHttpRequest();
+
+  xhr.addEventListener('load', () => {
+    console.log(xhr.response);
+
+    func();
+  });
+
+  xhr.open('GET', 'https://supersimplebackend.dev/cart');
+  xhr.send();
+}
